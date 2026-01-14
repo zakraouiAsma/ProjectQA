@@ -14,23 +14,23 @@ pipeline {
 
         stage('Setup Python') {
             steps {
-                sh '''
-                python${PYTHON_VERSION} -m venv venv
-                source venv/bin/activate
+                bat """
+                python -m venv venv
+                call venv\\Scripts\\activate
                 pip install --upgrade pip
                 pip install -r requirements.txt
                 pip install pytest pytest-html selenium
-                '''
+                """
             }
         }
 
         stage('Exécuter les tests Selenium') {
             steps {
-                sh '''
-                source venv/bin/activate
-                mkdir -p reports
-                pytest selenium_tests/ --html=reports/rapport_selenium.html --self-contained-html -v
-                '''
+                bat """
+                call venv\\Scripts\\activate
+                if not exist reports mkdir reports
+                pytest selenium_tests --html=reports\\rapport_selenium.html --self-contained-html -v
+                """
             }
         }
 
