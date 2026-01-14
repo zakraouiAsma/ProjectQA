@@ -16,9 +16,8 @@ pipeline {
             steps {
                 bat """
                 python -m venv venv
-                call venv\\Scripts\\activate
-                pip install --upgrade pip
-                pip install -r requirements.txt
+                call venv\\Scripts\\activate.bat
+                python -m pip install --upgrade pip
                 pip install pytest pytest-html selenium
                 """
             }
