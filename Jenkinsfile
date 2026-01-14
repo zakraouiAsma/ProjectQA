@@ -28,8 +28,7 @@ pipeline {
                 bat """
                 call venv\\Scripts\\activate.bat
                 if not exist reports mkdir reports
-                echo. > reports\\test_execution.log
-                python selenium_tests\\Tests_Check_Products.py 2>&1 | tee -a reports\\test_execution.log
+                python selenium_tests\\Tests_Check_Products.py > reports\\test_execution.log 2>&1
                 """ 
             }
         }
