@@ -40,11 +40,11 @@ def run_tests():
             # Vérifier le catalogue des produits
             products_to_verify = case.get("products_to_verify", [])
             if products_to_verify:
-                print("\n📦 Vérification du catalogue des produits...")
+                print("\n Vérification du catalogue des produits...")
                 results = check_products_catalog(driver, products_to_verify)
-                print(f"📊 Résultats: {results['passed']}/{results['total_tests']} vérifications réussies")
+                print(f" Résultats: {results['passed']}/{results['total_tests']} vérifications réussies")
             else:
-                print("⚠️ Pas de produits à vérifier dans le test case")
+                print(" Pas de produits à vérifier dans le test case")
             
         except Exception as e:
             print(f"[ERROR] Une erreur est survenue: {str(e)}")
