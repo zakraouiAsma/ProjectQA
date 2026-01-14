@@ -29,30 +29,17 @@ pipeline {
                 call venv\\Scripts\\activate.bat
                 if not exist reports mkdir reports
                 python selenium_tests\\Tests_Check_Products.py
-                """
-            }
-        }
-
-        stage('Publier le rapport HTML') {
-            steps {
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'reports',
-                    reportFiles: 'rapport_selenium.html',
-                    reportName: 'Rapport Selenium HTML'
-                ])
+                """ 
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline terminée avec succès ! Tous les tests Selenium sont passés.'
+            echo 'Pipeline terminee avec succes ! Tous les tests Selenium sont passes.'
         }
         failure {
-            echo 'La pipeline a échoué. Vérifiez le rapport HTML des tests.'
+            echo 'La pipeline a echoue. Verifiez le rapport HTML des tests.'
         }
         always {
             archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
