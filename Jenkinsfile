@@ -28,21 +28,22 @@ pipeline {
                 bat """
                 call venv\\Scripts\\activate.bat
                 if not exist reports mkdir reports
-                python selenium_tests\\Tests_Check_Products.py > reports\\test_execution.log 2>&1
-                """ 
+                chcp 65001
+                pytest selenium_tests --html=reports/rapport_selenium.html --self-contained-html > reports/test_execution.log 2>&1
+                """
             }
         }
 
-        stage('Generer rapport HTML') {
+        stage('Generer rapport Jenkins') {
             steps {
                 script {
-                    def logContent = readFile('reports/test_execution.log').take(10000)
+                    def logContent = readFile('reports/test_execution.log').take(10000).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
                     
-                    // Creer le rapport HTML avec les logs
                     def htmlReport = """
                     <!DOCTYPE html>
                     <html>
                     <head>
+                        <meta charset="UTF-8">
                         <title>Rapport Tests Selenium - Jenkins</title>
                         <style>
                             body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
@@ -61,30 +62,20 @@ pipeline {
                         </div>
                         
                         <div class="section">
-                            <h2>Logs d'Execution</h2>
+                            <h2>Logs d'Execution (extrait)</h2>
                             <div class="logs">${logContent}</div>
                         </div>
                         
                         <div class="footer">
                             <p>Rapport genere automatiquement par Jenkins</p>
-                            <p>Date: \${new Date()}</p>
+                            <p>Date: ${new Date()}</p>
                         </div>
                     </body>
                     </html>
                     """
                     
                     writeFile file: 'reports/jenkins_rapport.html', text: htmlReport
-                    echo 'Rapport HTML genere avec succes!'
-                }
-                
-                // Afficher un resume dans les logs
-                script {
-                    if (fileExists('reports/rapport_selenium.html')) {
-                        echo '======================================'
-                        echo 'Rapport Selenium: reports/rapport_selenium.html'
-                        echo 'Rapport Jenkins: reports/jenkins_rapport.html'
-                        echo '======================================'
-                    }
+                    echo 'Rapport Jenkins genere avec succes!'
                 }
             }
         }
@@ -92,22 +83,10 @@ pipeline {
 
     post {
         always {
-            // Afficher les logs d'execution
             script {
-                if (fileExists('reports/test_execution.log')) {
-                    echo '======================================'
-                    echo 'LOGS D EXECUTION DU TEST'
-                    echo '======================================'
-                    def logs = readFile('reports/test_execution.log')
-                    echo logs
-                }
-            }
-            
-            // Archiver tous les rapports et logs
-            archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
-            
-            // Afficher le resultat final
-            script {
+                // Afficher un résumé et archiver les rapports
+                archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
+
                 echo '======================================'
                 echo 'RESUME DE L EXECUTION'
                 echo '======================================'
