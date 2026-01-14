@@ -26,9 +26,9 @@ pipeline {
         stage('Exécuter les tests Selenium') {
             steps {
                 bat """
-                call venv\\Scripts\\activate
+                call venv\\Scripts\\activate.bat
                 if not exist reports mkdir reports
-                pytest selenium_tests --html=reports\\rapport_selenium.html --self-contained-html -v
+                python selenium_tests\\Tests_Check_Products.py
                 """
             }
         }
