@@ -1,0 +1,51 @@
+{
+  "saucedemo": {
+    "url": "https://www.saucedemo.com/",
+    
+    "login_page": {
+      "username": {
+        "by": "id",
+        "selector": "user-name",
+        "description": "Champ nom d'utilisateur"
+      },
+      "password": {
+        "by": "id", 
+        "selector": "password",
+        "description": "Champ mot de passe"
+      },
+      "login_button": {
+        "by": "id",
+        "selector": "login-button",
+        "description": "Bouton de connexion"
+      },
+      "error_container": {
+        "by": "class",
+        "selector": "error-message-container",
+        "description": "Conteneur des messages d'erreur"
+      },
+      "error_message": {
+        "by": "css",
+        "selector": "[data-test='error']",
+        "description": "Texte du message d'erreur"
+      },
+      "error_close_button": {
+        "by": "class",
+        "selector": "error-button",
+        "description": "Bouton × pour fermer l'erreur"
+      }
+    },
+    
+    "inventory_page": {
+      "inventory_container": {
+        "by": "id",
+        "selector": "inventory_container",
+        "description": "Conteneur de l'inventaire"
+      },
+      "page_title": {
+        "by": "class",
+        "selector": "title",
+        "description": "Titre de la page produits"
+      }
+    }
+  }
+}

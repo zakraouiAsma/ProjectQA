@@ -1,4 +1,5 @@
 {
+  "url": "https://www.saucedemo.com/",
   "test_cases": [
     {
       "description": "Test end-to-end de verification product",
@@ -6,7 +7,7 @@
       "password": "secret_sauce",
       "products_to_verify": [
         {
-          "name": "Sauce Labs Bike Light",
+          "name": "Sauce Labs Backpack",
           "price": 29.99,
           "price_label": "$29.99",
           "ui_checks": {
@@ -17,8 +18,8 @@
         },
         {
           "name": "Sauce Labs Bike Light",
-          "price": 9.99,
-          "price_label": "$9.99",
+          "price": 29.99,
+          "price_label": "$29.99",
           "ui_checks": {
             "image_visible": true,
             "add_to_cart_button": true,

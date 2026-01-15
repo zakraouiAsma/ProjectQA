@@ -27,8 +27,8 @@ pipeline {
             steps {
                 bat """
                 call venv\\Scripts\\activate.bat
-                if not exist reports mkdir reports
                 chcp 65001
+                if not exist reports mkdir reports
                 pytest selenium_tests --html=reports/rapport_selenium.html --self-contained-html > reports/test_execution.log 2>&1
                 """
             }

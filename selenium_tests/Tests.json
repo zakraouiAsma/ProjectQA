@@ -1,0 +1,79 @@
+{
+  "test_suite": "Gestion des erreurs de connexion",
+  "description": "Tests Selenium pour vérifier les scénarios de connexion échouée",
+  "url": "https://www.saucedemo.com/",
+  
+  "test_cases": [
+    {
+      "test_id": "TC-001",
+      "test_name": "utilisateur_invalide",
+      "description": "Tenter de se connecter avec un utilisateur invalide",
+      "steps": [
+        "Naviguer vers https://www.saucedemo.com/",
+        "Tenter de se connecter avec un utilisateur invalide",
+        "Vérifier le message d'erreur 'Epic sadface: Username and password do not match any user in this service'",
+        "Vérifier que le bouton de fermeture d'erreur fonctionne"
+      ],
+      "test_data": {
+        "username": "invalid_user",
+        "password": "invalid_password",
+        "expected_error": "Epic sadface: Username and password do not match any user in this service"
+      },
+      "expected_result": "error",
+      "verify_close_button": true
+    },
+    {
+      "test_id": "TC-002", 
+      "test_name": "sans_username",
+      "description": "Tenter de se connecter sans nom d'utilisateur",
+      "steps": [
+        "Naviguer vers https://www.saucedemo.com/",
+        "Tenter de se connecter sans nom d'utilisateur",
+        "Vérifier le message d'erreur 'Epic sadface: Username is required'",
+        "Vérifier que le bouton de fermeture d'erreur fonctionne"
+      ],
+      "test_data": {
+        "username": "",
+        "password": "secret_sauce",
+        "expected_error": "Epic sadface: Username is required"
+      },
+      "expected_result": "error",
+      "verify_close_button": true
+    },
+    {
+      "test_id": "TC-003",
+      "test_name": "sans_password",
+      "description": "Tenter de se connecter sans mot de passe",
+      "steps": [
+        "Naviguer vers https://www.saucedemo.com/",
+        "Tenter de se connecter sans mot de passe",
+        "Vérifier le message d'erreur 'Epic sadface: Password is required'",
+        "Vérifier que le bouton de fermeture d'erreur fonctionne"
+      ],
+      "test_data": {
+        "username": "standard_user",
+        "password": "",
+        "expected_error": "Epic sadface: Password is required"
+      },
+      "expected_result": "error", 
+      "verify_close_button": true
+    },
+    {
+      "test_id": "TC-004",
+      "test_name": "connexion_reussie",
+      "description": "Tenter de se connecter avec des identifiants valides",
+      "steps": [
+        "Naviguer vers https://www.saucedemo.com/",
+        "Tenter de se connecter avec standard_user / secret_sauce",
+        "Vérifier que la page d'inventaire s'affiche"
+      ],
+      "test_data": {
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "expected_error": ""
+      },
+      "expected_result": "success",
+      "verify_close_button": false
+    }
+  ]
+}

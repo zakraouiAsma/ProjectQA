@@ -1,0 +1,62 @@
+{
+  "saucedemo_locators": {
+    "login_page": {
+      "username_field": {
+        "by": "ID",
+        "value": "user-name"
+      },
+      "password_field": {
+        "by": "ID",
+        "value": "password"
+      },
+      "login_button": {
+        "by": "ID",
+        "value": "login-button"
+      }
+    },
+    "inventory_page": {
+      "inventory_container": {
+        "by": "ID",
+        "value": "inventory_container"
+      },
+      "page_title": {
+        "by": "CLASS_NAME",
+        "value": "title"
+      },
+      "product_items": {
+        "by": "CLASS_NAME",
+        "value": "inventory_item"
+      },
+      "product_name": {
+        "by": "CLASS_NAME",
+        "value": "inventory_item_name"
+      },
+      "product_price": {
+        "by": "CLASS_NAME",
+        "value": "inventory_item_price"
+      },
+      "product_image": {
+        "by": "TAG_NAME",
+        "value": "img"
+      },
+      "add_to_cart_button": {
+        "by": "CSS_SELECTOR",
+        "value": "button[data-test*='add-to-cart']"
+      }
+    },
+    "product_detail_page": {
+      "inventory_details_container": {
+        "by": "CLASS_NAME",
+        "value": "inventory_details"
+      },
+      "product_detail_name": {
+        "by": "CLASS_NAME",
+        "value": "inventory_details_name"
+      },
+      "back_to_products_button": {
+        "by": "ID",
+        "value": "back-to-products"
+      }
+    }
+  }
+}

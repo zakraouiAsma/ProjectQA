@@ -1,0 +1,37 @@
+{
+  "date": "2026-01-15T19:39:45.597943",
+  "resultats": [
+    {
+      "test_id": "TC-001",
+      "test_name": "utilisateur_invalide",
+      "succes": false,
+      "details": "Message correct: Epic sadface: Username and password do not match any user in this service | Bouton fermeture KO",
+      "duree": 3.7737832069396973,
+      "screenshot": "screenshot_TC-001_utilisateur_invalide.png"
+    },
+    {
+      "test_id": "TC-002",
+      "test_name": "sans_username",
+      "succes": false,
+      "details": "Message correct: Epic sadface: Username is required | Bouton fermeture KO",
+      "duree": 3.795830249786377,
+      "screenshot": "screenshot_TC-002_sans_username.png"
+    },
+    {
+      "test_id": "TC-003",
+      "test_name": "sans_password",
+      "succes": false,
+      "details": "Message correct: Epic sadface: Password is required | Bouton fermeture KO",
+      "duree": 3.4031174182891846,
+      "screenshot": "screenshot_TC-003_sans_password.png"
+    },
+    {
+      "test_id": "TC-004",
+      "test_name": "connexion_reussie",
+      "succes": true,
+      "details": "Connexion réussie",
+      "duree": 1.9920899868011475,
+      "screenshot": "screenshot_TC-004_connexion_reussie.png"
+    }
+  ]
+}
