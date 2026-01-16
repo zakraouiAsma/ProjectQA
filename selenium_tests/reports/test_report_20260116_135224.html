@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport de Tests Automatisés</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-info {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .test-info h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .test-info p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+        
+        .stat-box h4 {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stat-box.passed .stat-value {
+            color: #28a745;
+        }
+        
+        .stat-box.failed .stat-value {
+            color: #dc3545;
+        }
+        
+        .stat-box.total .stat-value {
+            color: #667eea;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        
+        .test-result {
+            background: #f8f9fa;
+            border-left: 5px solid #e9ecef;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .test-result.passed {
+            border-left-color: #28a745;
+            background: #f0f9f4;
+        }
+        
+        .test-result.failed {
+            border-left-color: #dc3545;
+            background: #faf5f5;
+        }
+        
+        .test-result-info {
+            flex: 1;
+        }
+        
+        .test-result-status {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .test-result.passed .test-result-status {
+            color: #28a745;
+        }
+        
+        .test-result.failed .test-result-status {
+            color: #dc3545;
+        }
+        
+        .test-name {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .test-details {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .badge.passed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge.failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Rapport de Tests Automatisés</h1>
+            <p>Selenium QA Testing - Sauce Demo</p>
+        </div>
+        
+        <div class="content">
+            <!-- Test Info -->
+            <div class="test-info">
+                <h3>📋 Informations du Test</h3>
+                <p><strong>Cas de test:</strong> Tests Selenium - SauceDemo</p>
+                <p><strong>Date et heure:</strong> 2026-01-16 13:52:24</p>
+                <p><strong>Plateforme:</strong> Sauce Demo (https://www.saucedemo.com/)</p>
+            </div>
+            
+            <!-- Section Tests Individuels -->
+            <div class="section">
+                <h2>🔍 Tests Individuels (6 produits)</h2>
+                
+                <div class="stats">
+                    <div class="stat-box total">
+                        <h4>Total de Tests</h4>
+                        <div class="stat-value">4</div>
+                    </div>
+                    <div class="stat-box passed">
+                        <h4>Tests Réussis</h4>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-box failed">
+                        <h4>Tests Échoués</h4>
+                        <div class="stat-value">4</div>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Taux de Réussite</h4>
+                        <div class="stat-value">0.0%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0.0%">0.0%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Détails des Tests Individuels</h3>
+                
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">Test 1: utilisateur_invalide (Échec du remplissage du formulaire)</div>
+                <div class="test-details">
+                    Total: 1 | 
+                    Réussi: 0 | 
+                    Échoué: 1
+                </div>
+            </div>
+            <div class="test-result-status">❌ FAIL</div>
+        </div>
+        
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">Test 2: sans_username (Échec du remplissage du formulaire)</div>
+                <div class="test-details">
+                    Total: 1 | 
+                    Réussi: 0 | 
+                    Échoué: 1
+                </div>
+            </div>
+            <div class="test-result-status">❌ FAIL</div>
+        </div>
+        
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">Test 3: sans_password (Échec du remplissage du formulaire)</div>
+                <div class="test-details">
+                    Total: 1 | 
+                    Réussi: 0 | 
+                    Échoué: 1
+                </div>
+            </div>
+            <div class="test-result-status">❌ FAIL</div>
+        </div>
+        
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">Test 4: connexion_reussie (Échec du remplissage du formulaire)</div>
+                <div class="test-details">
+                    Total: 1 | 
+                    Réussi: 0 | 
+                    Échoué: 1
+                </div>
+            </div>
+            <div class="test-result-status">❌ FAIL</div>
+        </div>
+        
+            </div>
+            
+            <!-- Section Tests Globaux -->
+            <div class="section">
+                <h2>🌍 Tests Globaux</h2>
+                
+                <div class="stats">
+                    <div class="stat-box total">
+                        <h4>Total de Vérifications</h4>
+                        <div class="stat-value">4</div>
+                    </div>
+                    <div class="stat-box passed">
+                        <h4>Vérifications Réussies</h4>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-box failed">
+                        <h4>Vérifications Échouées</h4>
+                        <div class="stat-value">4</div>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Taux de Réussite</h4>
+                        <div class="stat-value">0.0%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0.0%">0.0%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Détails des Tests Globaux</h3>
+                
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">❌ TC-001: utilisateur_invalide - Échec du remplissage du formulaire</div>
+            </div>
+        </div>
+        
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">❌ TC-002: sans_username - Échec du remplissage du formulaire</div>
+            </div>
+        </div>
+        
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">❌ TC-003: sans_password - Échec du remplissage du formulaire</div>
+            </div>
+        </div>
+        
+        <div class="test-result failed">
+            <div class="test-result-info">
+                <div class="test-name">❌ TC-004: connexion_reussie - Échec du remplissage du formulaire</div>
+            </div>
+        </div>
+        
+            </div>
+            
+            <!-- Résumé Final -->
+            <div class="section">
+                <h2>📈 Résumé Final</h2>
+                
+                <div class="test-result failed">
+                    <div class="test-result-info">
+                        <div class="test-name">
+                            ❌ CERTAINS TESTS ONT ÉCHOUÉ
+                        </div>
+                        <div class="test-details">
+                            Tests individuels: 0/4 | 
+                            Tests globaux: 0/4
+                        </div>
+                    </div>
+                    <div class="test-result-status">
+                        FAIL
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Rapport généré automatiquement - 2026-01-16 13:52:24</p>
+            <p>© 2026 QA Testing Suite</p>
+        </div>
+    </div>
+</body>
+</html>

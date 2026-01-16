@@ -29,8 +29,8 @@
         "description": "Texte du message d'erreur"
       },
       "error_close_button": {
-        "by": "class",
-        "selector": "error-button",
+        "by": "css",
+        "selector": ".error-button",
         "description": "Bouton × pour fermer l'erreur"
       }
     },

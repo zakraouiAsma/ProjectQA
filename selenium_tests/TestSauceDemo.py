@@ -1,10 +1,3 @@
-"""
-Script principal des tests SauceDemo
-Auteur: Automatisé
-Date: 2024-01-12
-Description: Exécute les tests de gestion des erreurs de connexion
-"""
-
 import json
 import time
 import os
@@ -16,9 +9,7 @@ from FunctionForConnection import (
     naviguer_vers_url,
     executer_test_case
 )
-from GenerateReportHTML import (
-    generate_test_report
-)
+from GenerateReportHTML import generate_test_report
 
 # ==============================================
 # FONCTIONS UTILITAIRES
@@ -43,29 +34,72 @@ def afficher_introduction(tests_data):
     print("🚀 TESTS SELENIUM - SAUCEDEMO")
     print("="*60)
     
-    if tests_data:
-        print(f"\n📋 Suite de tests: {tests_data.get('test_suite', 'Non spécifié')}")
-        print(f"📝 Description: {tests_data.get('description', '')}")
-        print(f"🌐 URL: {tests_data.get('url', 'Non spécifié')}")
-        print(f"🧪 Nombre de tests: {len(tests_data.get('test_cases', []))}")
+   
     
     print("\n🎯 Objectif: Tester les scénarios de connexion échouée")
     print("🔧 Points techniques: Gérer les messages d'erreur dynamiques, localiser les éléments d'erreur")
     
-    print("\n⚙️ Configuration système:")
+    
     chrome_portable = os.path.exists(r'C:\Chrome_Sources\chrome-win64\chrome.exe')
     chromedriver = os.path.exists(r'C:\Chrome_Sources\chromedriver-win64\chromedriver.exe')
     
-    print(f"   Chrome portable: {'✅' if chrome_portable else '❌'}")
-    print(f"   ChromeDriver: {'✅' if chromedriver else '❌'}")
     
     if not chromedriver:
         print("\n⚠️  IMPORTANT: ChromeDriver non trouvé!")
-        print("   Téléchargez-le sur: https://chromedriver.chromium.org/")
-        print("   Placez-le dans: C:\\Chrome_Sources\\")
+        
     
     print("\n⏳ Démarrage dans 5 secondes...")
     time.sleep(5)
+
+def generer_rapport_html(resultats, duree_totale, chemin_rapport="reports"):
+    """Génère et sauvegarde le rapport HTML des tests"""
+    # Créer le dossier reports s'il n'existe pas
+    os.makedirs(chemin_rapport, exist_ok=True)
+    
+    # Préparer les données pour le rapport
+    individual_results = []
+    for resultat in resultats:
+        individual_results.append({
+            "product": resultat.get("test_name", "Test"),
+            "price": resultat.get("details", ""),
+            "passed": resultat.get("succes", False),
+            "total_tests": 1,
+            "passed_tests": 1 if resultat.get("succes", False) else 0,
+            "failed_tests": 0 if resultat.get("succes", False) else 1
+        })
+    
+    global_results = {
+        "passed": sum(1 for r in resultats if r.get("succes", False)),
+        "failed": sum(1 for r in resultats if not r.get("succes", False)),
+        "total_tests": len(resultats),
+        "details": [
+            f"✅ {r['test_id']}: {r['test_name']}" if r.get("succes", False) 
+            else f"❌ {r['test_id']}: {r['test_name']} - {r.get('details', 'Erreur inconnue')}"
+            for r in resultats
+        ]
+    }
+    
+    # Générer le HTML
+    html_content = generate_test_report(
+        individual_results, 
+        global_results, 
+        "Tests Selenium - SauceDemo"
+    )
+    
+    # Créer un nom de fichier avec timestamp
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    nom_fichier = f"test_report_{timestamp}.html"
+    chemin_fichier = os.path.join(chemin_rapport, nom_fichier)
+    
+    # Sauvegarder le rapport
+    try:
+        with open(chemin_fichier, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+        print(f"\n✅ Rapport HTML généré: {chemin_fichier}")
+        return chemin_fichier
+    except Exception as e:
+        print(f"\n❌ Erreur lors de la génération du rapport HTML: {e}")
+        return None
 
 def afficher_resultats(resultats, duree_totale):
     """Affiche les résultats des tests"""
@@ -102,13 +136,13 @@ def afficher_resultats(resultats, duree_totale):
     print(f"│ ⏱️  TEMPS TOTAL            : {duree_totale:6.1f}s     │")
     print(f"└{'─'*40}┘")
     
-    # Message final
-    print("\n" + "="*60)
-    print("📋 CONCLUSION")
-    print("="*60)
+   # Message final
+    #print("\n" + "="*60)
+    #print("📋 CONCLUSION")
+   
     
     if tests_reussis == total_tests:
-        print("\n🎉🎉🎉 FÉLICITATIONS ! TOUS LES TESTS SONT RÉUSSIS ! 🎉🎉🎉")
+        print("\n🎉 FÉLICITATIONS ! TOUS LES TESTS SONT RÉUSSIS ! 🎉")
     elif taux_reussite >= 80:
         print(f"\n👍 EXCELLENT ! {tests_reussis}/{total_tests} tests réussis")
     else:
@@ -188,49 +222,7 @@ def executer_tous_les_tests():
     afficher_resultats(resultats, duree_totale)
     
     # Générer le rapport HTML
-    print(f"\n{'='*60}")
-    print(f"📊 GÉNÉRATION DU RAPPORT HTML")
-    print(f"{'='*60}")
-    
-    try:
-        # Transformer les résultats pour matcher la structure attendue par generate_test_report
-        resultats_transformes = []
-        for r in resultats:
-            resultats_transformes.append({
-                "passed": r["succes"],  # Convertir succes en passed
-                "product": r["test_name"],
-                "price": r.get("details", ""),
-                "total_tests": 1,
-                "passed_tests": 1 if r["succes"] else 0,
-                "failed_tests": 0 if r["succes"] else 1
-            })
-        
-        # Préparer les données pour le rapport
-        global_results = {
-            "total_tests": len(resultats),
-            "passed": sum(1 for r in resultats if r["succes"]),
-            "failed": sum(1 for r in resultats if not r["succes"]),
-            "details": [f"{'✅' if r['succes'] else '❌'} {r['test_name']}: {r['details']}" for r in resultats]
-        }
-        
-        # Générer le rapport
-        html_report = generate_test_report(resultats_transformes, global_results, tests_data.get('description', 'Tests SauceDemo'))
-        
-        # Sauvegarder le rapport
-        reports_dir = "reports"
-        if not os.path.exists(reports_dir):
-            os.makedirs(reports_dir)
-        
-        report_filename = os.path.join(reports_dir, f"test_report_saucedemo_{time.strftime('%Y%m%d_%H%M%S')}.html")
-        with open(report_filename, 'w', encoding='utf-8') as f:
-            f.write(html_report)
-        
-        print(f"✅ Rapport généré: {report_filename}")
-        print(f"📊 Ouvrir le fichier dans un navigateur pour voir le rapport détaillé")
-    except Exception as e:
-        print(f"❌ Erreur lors de la génération du rapport: {str(e)}")
-        import traceback
-        traceback.print_exc()
+    rapport_html = generer_rapport_html(resultats, duree_totale)
     
     # Informations finales
     print(f"\n📅 Date d'exécution: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -244,10 +236,10 @@ def executer_tous_les_tests():
 # ==============================================
 
 if __name__ == "__main__":
-    print("\n🔧" * 25)
+   
     print("🔧 TESTS AUTOMATISÉS SAUCEDEMO")
     print("🔧 Gestion des erreurs de connexion")
-    print("🔧" * 25)
+    
     
     try:
         resultats = executer_tous_les_tests()
@@ -270,6 +262,6 @@ if __name__ == "__main__":
         traceback.print_exc()
     
     finally:
-        print("\n" + "="*60)
+       
         print("👋 Programme terminé")
         print("="*60)

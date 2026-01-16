@@ -2,7 +2,7 @@ import json
 import sys
 import time
 import os
-from FunctionSauceDemo import (
+from FunctionProductSauceDemo import (
     check_single_product, check_products_catalog,
     
 )

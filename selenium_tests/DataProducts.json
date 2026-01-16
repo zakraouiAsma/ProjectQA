@@ -2,7 +2,7 @@
   "url": "https://www.saucedemo.com/",
   "test_cases": [
     {
-      "description": "Test end-to-end de verification product",
+      "description": "Test de verification product",
       "username": "standard_user",
       "password": "secret_sauce",
       "products_to_verify": [
