@@ -48,14 +48,16 @@ pipeline {
                 call venv\\Scripts\\activate.bat
                 
                 echo Mise à jour de pip...
-                python -m pip install --upgrade pip
+                python -m pip install --upgrade pip setuptools wheel
                 
-                echo Installation des dépendances...
+                echo Installation des dépendances depuis requirements.txt...
                 pip install -r requirements.txt
                 
-                echo ✅ Environnement configuré
-                python --version
+                echo Vérification des installations...
                 pip list
+                
+                echo ✅ Environnement configuré avec succès
+                python --version
                 """
             }
         }

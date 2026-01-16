@@ -1,12 +1,12 @@
 {
-  "date": "2026-01-16T14:03:40.194655",
+  "date": "2026-01-16T19:54:45.158308",
   "resultats": [
     {
       "test_id": "TC-001",
       "test_name": "utilisateur_invalide",
       "succes": true,
       "details": "Message correct | Bouton: problème Selenium connu",
-      "duree": 1.4605436325073242,
+      "duree": 6.870054006576538,
       "screenshot": "screenshot_TC-001_utilisateur_invalide.png"
     },
     {
@@ -14,7 +14,7 @@
       "test_name": "sans_username",
       "succes": true,
       "details": "Message correct | Bouton: problème Selenium connu",
-      "duree": 2.5758562088012695,
+      "duree": 2.4660115242004395,
       "screenshot": "screenshot_TC-002_sans_username.png"
     },
     {
@@ -22,7 +22,7 @@
       "test_name": "sans_password",
       "succes": true,
       "details": "Message correct | Bouton: problème Selenium connu",
-      "duree": 2.396263599395752,
+      "duree": 2.3326051235198975,
       "screenshot": "screenshot_TC-003_sans_password.png"
     },
     {
@@ -30,7 +30,7 @@
       "test_name": "connexion_reussie",
       "succes": true,
       "details": "Connexion réussie",
-      "duree": 4.309914588928223,
+      "duree": 4.287014961242676,
       "screenshot": "screenshot_TC-004_connexion_reussie.png"
     }
   ]
