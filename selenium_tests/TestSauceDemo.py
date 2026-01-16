@@ -1,7 +1,16 @@
+# -*- coding: utf-8 -*-
 import json
 import time
 import os
+import sys
+import io
 from datetime import datetime
+
+# Configure stdout pour UTF-8 sur Windows
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 from FunctionForConnection import (
     charger_locators,
     ouvrir_chrome,
