@@ -15,11 +15,14 @@ pipeline {
     }
 
     triggers {
-        // Check Products - Quotidien à 9h
-        cron('H 9 * * * %')
-        // SauceDemo Tests - Toutes les 12h
-        cron('H 21 * * * %')
-        // Webhook pour exécution manuelle
+        // Trigger cron pour exécution automatique des tests
+        // Check Products à 9h + SauceDemo à 21h + Polling toutes les 30 min
+        cron('''
+            H 9 * * * 
+            H 21 * * *
+        ''')
+        
+        // Polling SCM - Vérifier les changements toutes les 30 minutes
         pollSCM('H/30 * * * *')
     }
 
